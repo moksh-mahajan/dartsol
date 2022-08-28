@@ -11,8 +11,8 @@ class WalletBalancePage extends StatefulWidget {
 }
 
 class _WalletBalancePageState extends State<WalletBalancePage> {
-  static const devnetUrl = 'https://api.devnet.solana.com';
-  final _rpcClient = RpcClient(devnetUrl);
+  static const clusterUrl = 'https://api.devnet.solana.com';
+  final _rpcClient = RpcClient(clusterUrl);
 
   final _addressController = TextEditingController();
 
@@ -48,9 +48,23 @@ class _WalletBalancePageState extends State<WalletBalancePage> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Cluster Url',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          const Text(clusterUrl),
+          const SizedBox(
+            height: 48,
+          ),
           TextField(
+            autofocus: true,
             controller: _addressController,
-            maxLines: 2,
+            style: Theme.of(context).textTheme.titleSmall,
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: () => _addressController.clear(),
+            )),
           ),
           const SizedBox(
             height: 8,
@@ -64,7 +78,7 @@ class _WalletBalancePageState extends State<WalletBalancePage> {
           const SizedBox(
             height: 24,
           ),
-          if (_balance != null) ...[
+          if (_balance != null && !_isLoadingBalance) ...[
             Text(
               'Address',
               style: Theme.of(context).textTheme.headline6,

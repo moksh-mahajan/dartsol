@@ -1,6 +1,7 @@
-import 'package:dartsol/pages/wallet_balance_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'pages/airdrop_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: DartSolApp()));
@@ -16,7 +17,7 @@ class DartSolApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const WalletBalancePage(),
+      home: const AirdropPage(),
     );
   }
 }

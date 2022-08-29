@@ -1,6 +1,9 @@
 import 'dart:developer';
 
+import 'package:dartsol/cluster_url.dart';
+import 'package:dartsol/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:solana/solana.dart';
 
 class WalletBalancePage extends StatefulWidget {
@@ -11,9 +14,6 @@ class WalletBalancePage extends StatefulWidget {
 }
 
 class _WalletBalancePageState extends State<WalletBalancePage> {
-  static const clusterUrl = 'https://api.devnet.solana.com';
-  final _rpcClient = RpcClient(clusterUrl);
-
   final _addressController = TextEditingController();
 
   var _isLoadingBalance = false;
@@ -21,7 +21,9 @@ class _WalletBalancePageState extends State<WalletBalancePage> {
 
   Future<double?> _getWalletBalance(String publicKey) async {
     try {
-      final lamports = await _rpcClient.getBalance(publicKey);
+      final lamports = await ProviderContainer()
+          .read(rpcClientProvider)
+          .getBalance(publicKey);
       return lamports / lamportsPerSol;
     } catch (error) {
       log('Something went wrong: $error');
@@ -52,7 +54,7 @@ class _WalletBalancePageState extends State<WalletBalancePage> {
             'Cluster Url',
             style: Theme.of(context).textTheme.headline6,
           ),
-          const Text(clusterUrl),
+          Text(ClusterUrl.devnet.url),
           const SizedBox(
             height: 48,
           ),

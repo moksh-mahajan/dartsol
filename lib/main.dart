@@ -1,8 +1,9 @@
 import 'package:dartsol/pages/wallet_balance_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const DartSolApp());
+  runApp(const ProviderScope(child: DartSolApp()));
 }
 
 class DartSolApp extends StatelessWidget {
